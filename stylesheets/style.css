@@ -5,7 +5,6 @@
 	text-align: center;
 }
 #video-chat {
-	float: left;
 	min-width: 350px;
 }
 video {
@@ -240,11 +239,6 @@ perspective effects (not including the modals and the overlay).
 	-webkit-perspective: 600px;
 	-moz-perspective: 600px;
 	perspective: 600px;
-}
-
-.container {
-	background: #e74c3c;
-	min-height: 100%;
 }
 
 .md-modal {
