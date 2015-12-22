@@ -22,8 +22,7 @@
 <body>
 <div class = "bodyDiv">
 	<h1 style="margin-bottom: 10px;">WebRTC</h1>
-    <div id="tic-tac-box"></div>
-    <div style="float: left; width: 50%;">
+    <div style="float: left; width: 100%;">
 	    <div class="md-modal md-effect-13" id="modal-13" style="position: absolute;">
 				<div class="md-content">
 					<div>
@@ -85,10 +84,8 @@
    
 var video_hold = document.getElementById("video-chat");
 var video_out  = document.getElementById("vid-box");
-var game_board = document.getElementById("tic-tac-box");
 var user_name = "";
 
-var game_board = ticTacToe(game_board);
 
 function login(form) {
 	user_name = form.username.value || "Anonymous";
@@ -103,13 +100,12 @@ function login(form) {
 	    session.connected(function(session) { video_out.appendChild(session.video); showModal(); });
 	    session.ended(function(session) { video_out.innerHTML=''; });
 	});
-	phone.datachannel(onDataReceived);
 	return false;
 }
  
 function makeCall(form){
 	if (!window.phone) alert("Login First!");
-	else phone.dial(form.number.value, get_xirsys_servers());
+	else phone.dial(form.number.value);
 	return false;
 }
 
@@ -119,22 +115,6 @@ function end(){
 	video_hold.hidden = true;
 }
 
-game_board.onSquareClicked(
-	function(squareNum){
-		if (!window.phone) return;
-		var data = {square:squareNum, username:user_name};
-		window.phone.sendData(data);
-	}
-)
-
-// Maybe combine and only give access to onMessgae?
-function onDataReceived(msg){
-	console.log(msg);
-	if (msg.username==user_name) return; // Ignore what I sent.
-	console.log(msg.username + "  " + user_name);
-	var sqr_num = msg.square;
-	game_board.markBox(sqr_num);
-}
 
 function errWrap(fxn, form){
 	try {
@@ -148,29 +128,6 @@ function errWrap(fxn, form){
     
 function showModal(){
     $("#showModal").click();
-}
-
-function get_xirsys_servers() {
-    var servers;
-    $.ajax({
-        type: 'POST',
-        url: 'https://service.xirsys.com/ice',
-        data: {
-            room: 'default',
-            application: 'default',
-            domain: 'kevingleason.me',
-            ident: 'gleasonk',
-            secret: 'b9066b5e-1f75-11e5-866a-c400956a1e19',
-            secure: 1,
-        },
-        success: function(res) {
-	        console.log(res);
-            res = JSON.parse(res);
-            if (!res.e) servers = res.d.iceServers;
-        },
-        async: false
-    });
-    return servers;
 }
 
 
