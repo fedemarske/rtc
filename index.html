@@ -28,14 +28,21 @@
 
 	<div class="row">
 		<div class="col s12" id="video-chat" hidden="true">
-			<div class="card">
+			<div class="card col s6">
+				<div id="vid-box-local" class="center-align"></div>
+				<div class="card-action">
+					<a class="waves-effect waves-light btn center-align" onclick="end()">Push to Talk</a>
+				</div>
+			</div>
+			<div class="card col s1"></div>
+			<div class="card col s5">
 				<div id="vid-box" class="center-align"></div>
 				<div class="card-action">
 					<a class="waves-effect waves-light btn center-align" onclick="end()">End Call</a>
 				</div>
 			</div>
 		</div>
-		<div class="input-field col s6">
+		<div class="input-field col s4" id="form-box">
 			<div class="input-field col s12">
 			    <form  name="loginForm" id="login" action="#" onsubmit="return login(this);">
 					<i class="material-icons prefix">account_circle</i>
@@ -69,6 +76,8 @@
    
 var video_hold = document.getElementById("video-chat");
 var video_out  = document.getElementById("vid-box");
+var video_in  = document.getElementById("vid-box-local");
+var form_block = document.getElementById("form-box")
 var user_name = "";
 
 
@@ -80,10 +89,21 @@ function login(form) {
         subscribe_key : 'sub-c-ebfc8486-a8db-11e5-bd8c-0619f8945a4f',
         datachannels  : true,  // Enable Data Channels
     }); 
-    phone.ready(function(){ form.username.style.background="#55ff5b"; form.login_submit.className="btn waves-effect waves-light hide"; });
+    phone.ready(function(){ 
+    	form.username.style.background="#55ff5b"; 
+    	form.login_submit.className="btn waves-effect waves-light hide";
+    });
     phone.receive(function(session){
-        session.connected(function(session) { video_hold.hidden=false; video_out.appendChild(session.video); });
-        session.ended(function(session) { video_out.innerHTML=''; });
+        session.connected(function(session) { 
+        	video_hold.hidden=false; 
+        	video_out.appendChild(session.video);
+        	video_in.appendChild(phone.video);
+        	form_block.className = "input-field col s4 hide";
+        });
+        session.ended(function(session) { 
+        	video_out.innerHTML='';
+        	form_block.className = "input-field col s4";
+        });
     });
     return false;
 }
@@ -112,25 +132,6 @@ function errWrap(fxn, form){
 	}
 }
     
-function showModal(){
-    $("#showModal").click();
-}
-
 
 </script>
-<script src="js/modalEffects.js"></script>
-<script src="js/classie.js"></script>
-
-<script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new
-		Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-	ga('create', 'UA-46933211-3', 'auto');
-	ga('send', 'pageview');
-
-</script>
-
 </html>
