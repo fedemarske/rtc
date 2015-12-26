@@ -65,25 +65,43 @@
 	</div>
 </div>-->
 
-<div layout="column" layout-align="center center" layout-padding ng-cloak>
-	<h4>WEB RTC</h4>
+<div layout="column"  ng-controller="RtcController as r" layout-padding ng-cloak>
+	<h4 layout="column" layout-align="center center">WEB RTC</h4>
 	<br/>
-	<md-content class="autoScroll">
-		<form  name="loginForm" id="login" action="#" onsubmit="return login(this);">
-			<md-input-container class="md-icon-float md-block">
-				<!-- Use floating label instead of placeholder -->
-				<label>Ingrese un nombre</label>
-				<md-icon md-font-set="material-icons"> account_circle </md-icon>
-				<input ng-model="user.name" name="username" type="text">
-				<md-button class="md-raised md-primary" type="submit">Log In</md-button>
-			</md-input-container>
-		</form>
+	<div layout="row" layout-align="center center" id="video-chat" ng-show="r.videos">
+		<md-card>
+			<md-card-title>
+				<md-card-title-media id="vid-box-local">
+				</md-card-title-media>
+			</md-card-title>
+			<md-card-actions layout="row" layout-align="end center">
+				<md-button>Action 1</md-button>
+			</md-card-actions>
+		</md-card>
+		<md-card>
+			<md-card-title>
+				<md-card-title-media id="vid-box">
+				</md-card-title-media>
+			</md-card-title>
+			<md-card-actions layout="row" layout-align="end center">
+				<md-button>Action 1</md-button>
+			</md-card-actions>
+		</md-card>
+	</div>
+	<md-content class="autoScroll" layout="column" layout-align="center center">
+		<md-input-container class="md-icon-float md-block">
+			<!-- Use floating label instead of placeholder -->
+			<label>Ingrese un nombre</label>
+			<md-icon md-font-set="material-icons"> account_circle </md-icon>
+			<input name="username" ng-model="r.username" type="text" ng-disabled="r.loginSuccess">
+			<md-button class="md-raised md-primary" ng-click="r.login()" ng-disabled="r.loginSuccess">Log In</md-button>
+		</md-input-container>
 		<form name="callForm" id="call" action="#" onsubmit="return makeCall(this);">
 			<md-input-container class="md-icon-float md-block">
 				<!-- Use floating label instead of placeholder -->
 				<label>Ingrese un nombre para llamar</label>
 				<md-icon md-font-set="material-icons"> call </md-icon>
-				<input ng-model="user.name" name="number" type="text">
+				<input name="number" type="text">
 				<md-button class="md-raised md-primary" type="submit">Call</md-button>
 			</md-input-container>
 		</form>
@@ -113,33 +131,6 @@ var video_in  = document.getElementById("vid-box-local");
 var form_block = document.getElementById("form-box")
 var user_name = "";
 
-
-function login(form) {
-    user_name = form.username.value || "Anonymous";
-    var phone = window.phone = PHONE({
-        number        : user_name, // listen on username line else Anonymous
-        publish_key   : 'pub-c-2dd69866-318e-4ea4-84fa-b38d7fe74c8d',
-        subscribe_key : 'sub-c-ebfc8486-a8db-11e5-bd8c-0619f8945a4f',
-        datachannels  : true,  // Enable Data Channels
-    }); 
-    phone.ready(function(){ 
-    	form.username.style.background="#55ff5b"; 
-    	form.login_submit.className="btn waves-effect waves-light hide";
-    });
-    phone.receive(function(session){
-        session.connected(function(session) { 
-        	video_hold.hidden=false; 
-        	video_out.appendChild(session.video);
-        	video_in.appendChild(phone.video);
-        	form_block.className = "input-field col s4 hide";
-        });
-        session.ended(function(session) { 
-        	video_out.innerHTML='';
-        	form_block.className = "input-field col s4";
-        });
-    });
-    return false;
-}
 
  
 function makeCall(form){
