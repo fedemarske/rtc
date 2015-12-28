@@ -6,6 +6,7 @@ app.controller("RtcController", function($scope){
     self.videos = false;
     self.loginSuccess = false;
     self.videoOut = false;
+    self.talk = false;
 
     self.login = function() {
         var user_name = self.username || "Anonymous";
@@ -30,9 +31,27 @@ app.controller("RtcController", function($scope){
             });
             session.ended(function(session) {
                 video_out.innerHTML='';
-                form_block.className = "input-field col s4";
             });
         });
         return false;
+    }
+
+    self.makeCall = function(){
+        self.videoOut = true;
+    }
+
+    self.pushToTalk = function(){
+        phone.dial(self.number);
+        self.talk = true;
+    }
+
+    self.end = function(){
+        if (!window.phone) return;
+        window.phone.hangup();
+        self.talk = false;
+    }
+
+    self.endConnection = function(){
+        self.videoOut = false;
     }
 });

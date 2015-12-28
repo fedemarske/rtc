@@ -19,51 +19,6 @@
     
 </head>
 <body ng-app="RtcApp" ng-cloak>
-<!--<div class = "bodyDiv" ng-app="RtcApp" ng-cloak>
-	<div class="container">
-
-	<h4 class="center-align">WebRTC</h4>
-
-	<div class="row">
-		<div class="col s12" id="video-chat" hidden="true">
-			<div class="card col s6">
-				<div id="vid-box-local" class="center-align"></div>
-				<div class="card-action">
-					<a class="waves-effect waves-light btn center-align" onclick="end()">Push to Talk</a>
-				</div>
-			</div>
-			<div class="card col s1"></div>
-			<div class="card col s5">
-				<div id="vid-box" class="center-align"></div>
-				<div class="card-action">
-					<a class="waves-effect waves-light btn center-align" onclick="end()">End Call</a>
-				</div>
-			</div>
-		</div>
-		<div class="input-field col s4" id="form-box">
-			<div class="input-field col s12">
-			    <form  name="loginForm" id="login" action="#" onsubmit="return login(this);">
-					<i class="material-icons prefix">account_circle</i>
-					<input type="text" name="username" id="username" placeholder="Enter A Username" class="validate"/>            
-					<button class="btn waves-effect waves-light" name="login_submit" type="submit">Log In
-						<i class="material-icons right">send</i>
-					</button>
-			    </form>
-		    </div>
-		    <div class="input-field col s12">
-			    <form name="callForm" id="call" action="#" onsubmit="return makeCall(this);">
-					<i class="material-icons prefix">phone</i>
-					<input type="text" name="number" id="call" placeholder="Enter User To Call!" class="validate"/>
-					<button class="btn waves-effect waves-light" type="submit" >Call
-						<i class="material-icons right">send</i>
-					</button>
-			    </form>
-		    </div>
-		</div>
-	</div>
-
-	</div>
-</div>-->
 
 <div layout="column"  ng-controller="RtcController as r" layout-padding ng-cloak>
 	<h4 layout="column" layout-align="center center">WEB RTC</h4>
@@ -75,7 +30,7 @@
 				</md-card-title-media>
 			</md-card-title>
 			<md-card-actions layout="row" layout-align="end center">
-				<md-button>Log Out</md-button>
+				<!-- <md-button>Log Out</md-button> -->
 			</md-card-actions>
 		</md-card>
 		<md-card ng-show="r.videoOut">
@@ -84,9 +39,18 @@
 				</md-card-title-media>
 			</md-card-title>
 			<md-card-actions layout="row" layout-align="end center">
-				<md-button>Action 1</md-button>
+				<md-button ng-click="r.endConnection()">End Connection</md-button>
+				<md-button ng-click="r.pushToTalk()" ng-show="!r.talk">Press To Talk</md-button>
+				<md-button ng-click="r.end()" ng-show="r.talk">Press To End</md-button>
 			</md-card-actions>
 		</md-card>
+		<md-input-container class="md-icon-float md-block" ng-show="!r.videoOut">
+			<!-- Use floating label instead of placeholder -->
+			<label>Ingrese un nombre para llamar</label>
+			<md-icon md-font-set="material-icons"> call </md-icon>
+			<input name="number" ng-model="r.number" type="text">
+			<md-button class="md-raised md-primary" ng-click="r.makeCall()">Connect</md-button>
+		</md-input-container>
 	</div>
 	<md-content class="autoScroll" layout="column" layout-align="center center">
 		<md-input-container class="md-icon-float md-block" ng-show="!r.loginSuccess">
@@ -96,15 +60,6 @@
 			<input name="username" ng-model="r.username" type="text">
 			<md-button class="md-raised md-primary" ng-click="r.login()" >Log In</md-button>
 		</md-input-container>
-		<form name="callForm" id="call" action="#" onsubmit="return makeCall(this);">
-			<md-input-container class="md-icon-float md-block">
-				<!-- Use floating label instead of placeholder -->
-				<label>Ingrese un nombre para llamar</label>
-				<md-icon md-font-set="material-icons"> call </md-icon>
-				<input name="number" type="text">
-				<md-button class="md-raised md-primary" type="submit">Call</md-button>
-			</md-input-container>
-		</form>
 	</md-content>
 </div>
 </body>
@@ -124,27 +79,12 @@
 <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
 <script src="js/webrtc-2.0.0.js"></script>
 <script type="text/javascript">
-   
+
 var video_hold = document.getElementById("video-chat");
 var video_out  = document.getElementById("vid-box");
 var video_in  = document.getElementById("vid-box-local");
 var form_block = document.getElementById("form-box")
-var user_name = "";
-
-
- 
-function makeCall(form){
-	if (!window.phone) alert("Login First!");
-	else phone.dial(form.number.value);
-	return false;
-}
-
-function end(){
-	if (!window.phone) return;
-	window.phone.hangup();
-	video_hold.hidden = true;
-}
-
+   
 
 function errWrap(fxn, form){
 	try {
