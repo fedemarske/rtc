@@ -5,6 +5,7 @@ app.controller("RtcController", function($scope){
 
     self.videos = false;
     self.loginSuccess = false;
+    self.videoOut = false;
 
     self.login = function() {
         var user_name = self.username || "Anonymous";
@@ -18,13 +19,14 @@ app.controller("RtcController", function($scope){
             console.log("todo piola");
             $scope.$apply(function(){
                 self.loginSuccess = true;
+                self.videos = true;
+                video_in.appendChild(phone.video);
             })
         });
         phone.receive(function(session){
             session.connected(function(session) {
-                self.videos = true;
                 video_out.appendChild(session.video);
-                video_in.appendChild(phone.video);
+                self.videoOut = true;
             });
             session.ended(function(session) {
                 video_out.innerHTML='';

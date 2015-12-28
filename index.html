@@ -75,10 +75,10 @@
 				</md-card-title-media>
 			</md-card-title>
 			<md-card-actions layout="row" layout-align="end center">
-				<md-button>Action 1</md-button>
+				<md-button>Log Out</md-button>
 			</md-card-actions>
 		</md-card>
-		<md-card>
+		<md-card ng-show="r.videoOut">
 			<md-card-title>
 				<md-card-title-media id="vid-box">
 				</md-card-title-media>
@@ -89,12 +89,12 @@
 		</md-card>
 	</div>
 	<md-content class="autoScroll" layout="column" layout-align="center center">
-		<md-input-container class="md-icon-float md-block">
+		<md-input-container class="md-icon-float md-block" ng-show="!r.loginSuccess">
 			<!-- Use floating label instead of placeholder -->
 			<label>Ingrese un nombre</label>
 			<md-icon md-font-set="material-icons"> account_circle </md-icon>
-			<input name="username" ng-model="r.username" type="text" ng-disabled="r.loginSuccess">
-			<md-button class="md-raised md-primary" ng-click="r.login()" ng-disabled="r.loginSuccess">Log In</md-button>
+			<input name="username" ng-model="r.username" type="text">
+			<md-button class="md-raised md-primary" ng-click="r.login()" >Log In</md-button>
 		</md-input-container>
 		<form name="callForm" id="call" action="#" onsubmit="return makeCall(this);">
 			<md-input-container class="md-icon-float md-block">
