@@ -1,6 +1,6 @@
 var app = angular.module('RtcApp', ['ngMaterial']);
 
-app.controller("RtcController", function($scope){
+app.controller("RtcController", function($scope,$log){
     var self = this;
 
     self.videos = false;
@@ -17,7 +17,6 @@ app.controller("RtcController", function($scope){
             datachannels  : true,  // Enable Data Channels
         });
         phone.ready(function(){
-            console.log("todo piola");
             $scope.$apply(function(){
                 self.loginSuccess = true;
                 self.videos = true;
@@ -26,11 +25,16 @@ app.controller("RtcController", function($scope){
         });
         phone.receive(function(session){
             session.connected(function(session) {
-                video_out.appendChild(session.video);
-                self.videoOut = true;
+                console.log("oaaaaaaa")
+                $scope.$apply(function(){
+                    self.videoOut = true;
+                    self.talk = true;
+                    video_out.appendChild(session.video);
+                });
             });
             session.ended(function(session) {
                 video_out.innerHTML='';
+                self.talk = false;
             });
         });
         return false;
@@ -41,6 +45,7 @@ app.controller("RtcController", function($scope){
     }
 
     self.pushToTalk = function(){
+        $log.log(self.number)
         phone.dial(self.number);
         self.talk = true;
     }
