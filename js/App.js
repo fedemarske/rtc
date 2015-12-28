@@ -25,7 +25,6 @@ app.controller("RtcController", function($scope,$log){
         });
         phone.receive(function(session){
             session.connected(function(session) {
-                console.log("oaaaaaaa")
                 $scope.$apply(function(){
                     self.videoOut = true;
                     self.talk = true;
