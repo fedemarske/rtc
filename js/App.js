@@ -21,7 +21,6 @@ app.controller("RtcController", function($scope,$log){
             $scope.$apply(function(){
                 self.loginSuccess = true;
                 self.videos = true;
-                video_in.appendChild(phone.video);
             })
         });
         phone.receive(function(session){
@@ -56,11 +55,13 @@ app.controller("RtcController", function($scope,$log){
     self.pushToTalk = function(){
         self.talk = true;
         window.phone.send({data: 1 });
+        video_in.appendChild(phone.video);
     }
 
     self.end = function(){
         if (!window.phone) return;
         window.phone.send({data: 0 });
+        video_in.innerHTML='';
         self.talk = false;
     }
 
