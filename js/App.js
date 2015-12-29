@@ -38,8 +38,10 @@ app.controller("RtcController", function($scope,$log){
         phone.message(function(session, message) {
             console.log(message)
             if(message.data){
-                console.log(session.video)
-                video_out.appendChild(session.video);
+                if(phone.number() !== session.number){
+                    console.log(session)
+                    video_out.appendChild(session.video);
+                }
             }else{
                 video_out.innerHTML='';
             }
