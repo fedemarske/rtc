@@ -31,6 +31,8 @@
 			</md-card-title>
 			<md-card-actions layout="row" layout-align="end center">
 				<!-- <md-button>Log Out</md-button> -->
+				<md-button ng-click="r.pushToTalk()" ng-show="!r.talk">Press To Talk</md-button>
+				<md-button ng-click="r.end()" ng-show="r.talk">Press To Mute</md-button>
 			</md-card-actions>
 		</md-card>
 		<md-card ng-show="r.videoOut">
@@ -40,8 +42,6 @@
 			</md-card-title>
 			<md-card-actions layout="row" layout-align="end center">
 				<md-button ng-click="r.endConnection()">End Connection</md-button>
-				<md-button ng-click="r.pushToTalk()" ng-show="!r.talk">Press To Talk</md-button>
-				<md-button ng-click="r.end()" ng-show="r.talk">Press To End</md-button>
 			</md-card-actions>
 		</md-card>
 		<md-input-container class="md-icon-float md-block" ng-show="!r.videoOut">
