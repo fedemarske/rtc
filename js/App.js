@@ -27,8 +27,6 @@ app.controller("RtcController", function($scope,$log){
             session.connected(function(session) {
                 $scope.$apply(function(){
                     self.videoOut = true;
-                    session.video.id = "video_2";
-                    self.video_2 = session.video;
                     $log.log(session.video)
                 });
             });
