@@ -7,6 +7,7 @@ app.controller("RtcController", function($scope,$log){
     self.loginSuccess = false;
     self.videoOut = false;
     self.talk = false;
+    self.video_2 = null;
 
     self.login = function() {
         var user_name = self.username || "Anonymous";
@@ -28,7 +29,9 @@ app.controller("RtcController", function($scope,$log){
                 $scope.$apply(function(){
                     self.videoOut = true;
                     self.talk = true;
-                    video_out.appendChild(session.video);
+                    session.video.id = "video_2";
+                    self.video_2 = session.video;
+                    $log.log(session.video)
                 });
             });
             session.ended(function(session) {
@@ -41,21 +44,22 @@ app.controller("RtcController", function($scope,$log){
 
     self.makeCall = function(){
         self.videoOut = true;
+        phone.dial(self.number);
     }
 
     self.pushToTalk = function(){
-        $log.log(self.number)
-        phone.dial(self.number);
         self.talk = true;
+        video_out.appendChild(self.video_2);
     }
 
     self.end = function(){
         if (!window.phone) return;
-        window.phone.hangup();
+        video_out.removeChild(video_out.childNodes[0])
         self.talk = false;
     }
 
     self.endConnection = function(){
+        window.phone.hangup();
         self.videoOut = false;
     }
 });
