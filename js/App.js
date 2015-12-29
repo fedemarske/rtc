@@ -28,7 +28,6 @@ app.controller("RtcController", function($scope,$log){
             session.connected(function(session) {
                 $scope.$apply(function(){
                     self.videoOut = true;
-                    self.talk = true;
                     session.video.id = "video_2";
                     self.video_2 = session.video;
                     $log.log(session.video)
@@ -39,6 +38,13 @@ app.controller("RtcController", function($scope,$log){
                 self.talk = false;
             });
         });
+        phone.message(function( session, message ) {
+            if(message.data){
+                video_out.appendChild(session.video);
+            }else{
+                video_out.innerHTML='';
+            }
+        } );
         return false;
     }
 
@@ -49,12 +55,12 @@ app.controller("RtcController", function($scope,$log){
 
     self.pushToTalk = function(){
         self.talk = true;
-        video_out.appendChild(self.video_2);
+        window.phone.send({data: 1 });
     }
 
     self.end = function(){
         if (!window.phone) return;
-        video_out.removeChild(video_out.childNodes[0])
+        window.phone.send({data: 0 });
         self.talk = false;
     }
 
