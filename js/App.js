@@ -40,8 +40,8 @@ app.controller("RtcController", function($scope,$log){
         phone.message(function(session, message) {
             console.log(message)
             if(message.data){
-                console.log(session.video)
-                video_out.appendChild(session.video);
+                console.log(self.video_2)
+                video_out.appendChild(self.video_2);
             }else{
                 video_out.innerHTML='';
             }
