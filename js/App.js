@@ -17,19 +17,19 @@ app.controller("RtcController", function($scope,$log){
             publish_key   : 'pub-c-2dd69866-318e-4ea4-84fa-b38d7fe74c8d',
             subscribe_key : 'sub-c-ebfc8486-a8db-11e5-bd8c-0619f8945a4f',
             datachannels  : true,  // Enable Data Channels
-            media         : { audio : false, video : true },
         });
         phone.ready(function(){
             $scope.$apply(function(){
                 self.loginSuccess = true;
                 self.videos = true;
-                //phone.stopAudio();
+                phone.stopAudio();
             })
         });
         phone.receive(function(session){
             session.connected(function(session) {
                 $scope.$apply(function(){
                     self.videoOut = true;
+                    session.stopAudio();
                     $log.log(session)
                     self.theOther = session;
                 });
@@ -43,11 +43,11 @@ app.controller("RtcController", function($scope,$log){
         phone.message(function(session, message) {
             console.log(message)
             if(message.data){
-                if(phone.number() != session.number){
+                if(phone.number() !== session.number){
                     session.video.style.display = "block";
                     session.video.id = "video_out";
                     video_out.appendChild(session.video);
-                    session.resumeAudio();
+                    phone.resumeAudio();
                 }
             }else{
                 document.getElementById("video_out").style.display = "none";
@@ -68,7 +68,6 @@ app.controller("RtcController", function($scope,$log){
         self.theOther.send({data: 1 });
         phone.video.style.display = "block";
         phone.video.id = "video_in";
-        phone.video.setAttribute("muted", "");
         video_in.appendChild(phone.video);
     }
 
