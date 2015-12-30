@@ -181,13 +181,13 @@ var PHONE = window.PHONE = function(config) {
             };
 
             talk.stopAudio = function(){
+                mystream.getAudioTracks()[0].enabled = false;
                 console.log(mystream.getAudioTracks());
-                mystream.getAudioTracks()[0].enabled = true;
             }
 
             talk.resumeAudio = function(){
+                mystream.getAudioTracks()[0].enabled = true;
                 console.log(mystream.getAudioTracks());
-                mystream.getAudioTracks()[0].enabled = false;
             }
 
             // Sending Messages
