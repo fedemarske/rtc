@@ -182,12 +182,12 @@ var PHONE = window.PHONE = function(config) {
 
             talk.stopAudio = function(){
                 console.log(mystream.getAudioTracks());
-                mystream.getAudioTracks().enabled = true;
+                mystream.getAudioTracks()[0].enabled = true;
             }
 
             talk.resumeAudio = function(){
                 console.log(mystream.getAudioTracks());
-                mystream.getAudioTracks().enabled = false;
+                mystream.getAudioTracks()[0].enabled = false;
             }
 
             // Sending Messages
