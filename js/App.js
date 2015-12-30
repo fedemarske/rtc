@@ -30,6 +30,7 @@ app.controller("RtcController", function($scope,$log){
                 $scope.$apply(function(){
                     self.videoOut = true;
                     session.stopAudio();
+                    $log.log(session)
                     self.theOther = session;
                 });
             });
@@ -46,11 +47,11 @@ app.controller("RtcController", function($scope,$log){
                     session.video.style.display = "block";
                     session.video.id = "video_out";
                     video_out.appendChild(session.video);
-                    phone.resumeAudio();
+                    //session.resumeAudio();
                 }
             }else{
                 document.getElementById("video_out").style.display = "none";
-                session.stopAudio();
+                //session.stopAudio();
             }
         } );
         return false;
@@ -67,7 +68,8 @@ app.controller("RtcController", function($scope,$log){
         self.theOther.send({data: 1 });
         phone.video.style.display = "block";
         phone.video.id = "video_in";
-        //video_in.appendChild(phone.video);
+        phone.video.setAttribute("muted", "");
+        video_in.appendChild(phone.video);
     }
 
     self.end = function(){
