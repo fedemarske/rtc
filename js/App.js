@@ -27,7 +27,7 @@ app.controller("RtcController", function($scope,$log){
             session.connected(function(session) {
                 $scope.$apply(function(){
                     self.videoOut = true;
-                    $log.log(session.video)
+                    $log.log(session)
                 });
             });
             session.ended(function(session) {
@@ -39,11 +39,12 @@ app.controller("RtcController", function($scope,$log){
             console.log(message)
             if(message.data){
                 if(phone.number() !== session.number){
-                    console.log(session)
+                    session.video.style.display = "block";
+                    session.video.id = "video_out";
                     video_out.appendChild(session.video);
                 }
             }else{
-                video_out.innerHTML='';
+                document.getElementById("video_out").style.display = "none";
             }
         } );
         return false;
@@ -57,13 +58,16 @@ app.controller("RtcController", function($scope,$log){
     self.pushToTalk = function(){
         self.talk = true;
         window.phone.send({data: 1 });
+        console.log(phone)
+        phone.video.style.display = "block";
+        phone.video.id = "video_in";
         video_in.appendChild(phone.video);
     }
 
     self.end = function(){
         if (!window.phone) return;
         window.phone.send({data: 0 });
-        video_in.innerHTML='';
+        document.getElementById("video_in").style.display = "none";
         self.talk = false;
     }
 
