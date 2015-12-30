@@ -45,6 +45,7 @@ app.controller("RtcController", function($scope,$log){
                 }
             }else{
                 document.getElementById("video_out").style.display = "none";
+                document.getElementById("video_out").pause();
             }
         } );
         return false;
@@ -68,6 +69,7 @@ app.controller("RtcController", function($scope,$log){
         if (!window.phone) return;
         window.phone.send({data: 0 });
         document.getElementById("video_in").style.display = "none";
+        document.getElementById("video_in").pause();
         self.talk = false;
     }
 
