@@ -27,6 +27,7 @@ app.controller("RtcController", function($scope,$log){
             session.connected(function(session) {
                 $scope.$apply(function(){
                     self.videoOut = true;
+                    session.stop();
                     $log.log(session)
                 });
             });
@@ -42,10 +43,10 @@ app.controller("RtcController", function($scope,$log){
                     session.video.style.display = "block";
                     session.video.id = "video_out";
                     video_out.appendChild(session.video);
+                    phone.dial(self.number);
                 }
             }else{
                 document.getElementById("video_out").style.display = "none";
-                document.getElementById("video_out").pause();
             }
         } );
         return false;
