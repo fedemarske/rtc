@@ -21,6 +21,7 @@ app.controller("RtcController", function($scope,$log){
             $scope.$apply(function(){
                 self.loginSuccess = true;
                 self.videos = true;
+                phone.stopAudio();
             })
         });
         phone.receive(function(session){

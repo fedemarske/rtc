@@ -274,6 +274,19 @@ var PHONE = window.PHONE = function(config) {
         })
     };
 
+
+
+    PHONE.stopAudio = function(){
+        var talk = get_conversation(config.number);
+        talk.stopAudio();
+    }
+
+    PHONE.resumeAudio = function(){
+        var talk = get_conversation(config.number);
+        talk.resumeAudio();
+    }
+
+
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     // Make Call - Create new PeerConnection
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
