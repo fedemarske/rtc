@@ -281,6 +281,7 @@ var PHONE = window.PHONE = function(config) {
     PHONE.stopAudio = function(){
         var talk = get_conversation(config.number);
         console.log(talk)
+        console.log(config.number)
         talk.stopAudio();
     }
 

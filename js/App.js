@@ -22,7 +22,7 @@ app.controller("RtcController", function($scope,$log){
             $scope.$apply(function(){
                 self.loginSuccess = true;
                 self.videos = true;
-                phone.stopAudio();
+                //phone.stopAudio();
             })
         });
         phone.receive(function(session){
@@ -43,7 +43,7 @@ app.controller("RtcController", function($scope,$log){
         phone.message(function(session, message) {
             console.log(message)
             if(message.data){
-                if(phone.number() !== session.number){
+                if(phone.number() != session.number){
                     session.video.style.display = "block";
                     session.video.id = "video_out";
                     video_out.appendChild(session.video);
@@ -68,7 +68,7 @@ app.controller("RtcController", function($scope,$log){
         self.theOther.send({data: 1 });
         phone.video.style.display = "block";
         phone.video.id = "video_in";
-        video_in.appendChild(phone.video);
+        //video_in.appendChild(phone.video);
     }
 
     self.end = function(){
