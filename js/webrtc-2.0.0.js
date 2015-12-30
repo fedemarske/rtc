@@ -159,6 +159,16 @@ var PHONE = window.PHONE = function(config) {
                 return mystream;
             };
 
+            talk.stopAudio = function(){
+                console.log(mystream.getAudioTracks());
+                mystream.getAudioTracks().enabled = true;
+            }
+
+            talk.resumeAudio = function(){
+                console.log(mystream.getAudioTracks());
+                mystream.getAudioTracks().enabled = false;
+            }
+
             // Sending Messages
             talk.send = function(message) {
                 transmit( number, { usermsg : message } );
