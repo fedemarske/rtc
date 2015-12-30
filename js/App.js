@@ -8,6 +8,7 @@ app.controller("RtcController", function($scope,$log){
     self.videoOut = false;
     self.talk = false;
     self.video_2 = null;
+    self.theOther = null;
 
     self.login = function() {
         var user_name = self.username || "Anonymous";
@@ -30,6 +31,7 @@ app.controller("RtcController", function($scope,$log){
                     self.videoOut = true;
                     session.stopAudio();
                     $log.log(session)
+                    self.theOther = session;
                 });
             });
             session.ended(function(session) {
@@ -62,8 +64,8 @@ app.controller("RtcController", function($scope,$log){
 
     self.pushToTalk = function(){
         self.talk = true;
-        window.phone.send({data: 1 });
-        console.log(phone)
+        console.log(self.theOther)
+        self.theOther.send({data: 1 });
         phone.video.style.display = "block";
         phone.video.id = "video_in";
         video_in.appendChild(phone.video);
@@ -71,9 +73,8 @@ app.controller("RtcController", function($scope,$log){
 
     self.end = function(){
         if (!window.phone) return;
-        window.phone.send({data: 0 });
+        self.theOther.send({data: 0 });
         document.getElementById("video_in").style.display = "none";
-        document.getElementById("video_in").pause();
         self.talk = false;
     }
 
