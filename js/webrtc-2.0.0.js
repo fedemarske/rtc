@@ -183,11 +183,13 @@ var PHONE = window.PHONE = function(config) {
             talk.stopAudio = function(){
                 mystream.getAudioTracks()[0].enabled = false;
                 console.log(mystream.getAudioTracks());
+                console.log(mystream.getVideoTracks());
             }
 
             talk.resumeAudio = function(){
                 mystream.getAudioTracks()[0].enabled = true;
                 console.log(mystream.getAudioTracks());
+                console.log(mystream.getVideoTracks());
             }
 
             // Sending Messages
@@ -278,6 +280,7 @@ var PHONE = window.PHONE = function(config) {
 
     PHONE.stopAudio = function(){
         var talk = get_conversation(config.number);
+        console.log(talk)
         talk.stopAudio();
     }
 

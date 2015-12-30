@@ -35,6 +35,7 @@ app.controller("RtcController", function($scope,$log){
             session.ended(function(session) {
                 video_out.innerHTML='';
                 self.talk = false;
+                self.videoOut = false;
             });
         });
         phone.message(function(session, message) {
@@ -48,6 +49,7 @@ app.controller("RtcController", function($scope,$log){
                 }
             }else{
                 document.getElementById("video_out").style.display = "none";
+                session.stopAudio();
             }
         } );
         return false;
