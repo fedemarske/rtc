@@ -17,6 +17,7 @@ app.controller("RtcController", function($scope,$log){
             publish_key   : 'pub-c-2dd69866-318e-4ea4-84fa-b38d7fe74c8d',
             subscribe_key : 'sub-c-ebfc8486-a8db-11e5-bd8c-0619f8945a4f',
             datachannels  : true,  // Enable Data Channels
+            ssl: true
         });
         phone.ready(function(){
             $scope.$apply(function(){
