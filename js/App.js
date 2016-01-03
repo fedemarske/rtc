@@ -23,14 +23,16 @@ app.controller("RtcController", function($scope,$log){
             $scope.$apply(function(){
                 self.loginSuccess = true;
                 self.videos = true;
-                phone.stopAudio();
+                video_in.appendChild(phone.video);
+                console.log(phone.stream())
+                //phone.stopAudio();
             })
         });
         phone.receive(function(session){
             session.connected(function(session) {
                 $scope.$apply(function(){
                     self.videoOut = true;
-                    session.stopAudio();
+                    //session.stopAudio();
                     $log.log(session)
                     self.theOther = session;
                 });
@@ -52,6 +54,7 @@ app.controller("RtcController", function($scope,$log){
                 }
             }else{
                 document.getElementById("video_out").style.display = "none";
+                document.getElementById("video_out").muted= true;
                 //session.stopAudio();
             }
         } );
