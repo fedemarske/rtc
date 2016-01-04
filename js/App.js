@@ -39,6 +39,8 @@ app.controller("RtcController", function($scope,$log){
                     session.video.style.display = "none";
                     session.video.id = "video_out";
                     session.video.muted = true;
+                    session.video.width  = 240;
+                    session.video.height = 180;
                     video_out.appendChild(session.video);
                 });
             });
