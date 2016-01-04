@@ -28,6 +28,7 @@ app.controller("RtcController", function($scope,$log){
                 phone.video.style.display = "none";
                 phone.video.id = "video_in";
                 phone.video.muted = true;
+                phone.video.style.borderRadius = "100px";
                 video_in.appendChild(phone.video);
             })
         });
