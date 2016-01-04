@@ -9,6 +9,7 @@ app.controller("RtcController", function($scope,$log){
     self.talk = false;
     self.video_2 = null;
     self.theOther = null;
+    self.userName = "";
 
     self.login = function() {
         var user_name = self.username || "Anonymous";
@@ -23,18 +24,22 @@ app.controller("RtcController", function($scope,$log){
             $scope.$apply(function(){
                 self.loginSuccess = true;
                 self.videos = true;
+                self.userName = phone.number();
+                phone.video.style.display = "none";
+                phone.video.id = "video_in";
+                phone.video.muted = true;
                 video_in.appendChild(phone.video);
-                console.log(phone.stream())
-                //phone.stopAudio();
             })
         });
         phone.receive(function(session){
             session.connected(function(session) {
                 $scope.$apply(function(){
                     self.videoOut = true;
-                    //session.stopAudio();
-                    $log.log(session)
                     self.theOther = session;
+                    session.video.style.display = "none";
+                    session.video.id = "video_out";
+                    session.video.muted = true;
+                    video_out.appendChild(session.video);
                 });
             });
             session.ended(function(session) {
@@ -47,10 +52,8 @@ app.controller("RtcController", function($scope,$log){
             console.log(message)
             if(message.data){
                 if(phone.number() !== session.number){
-                    session.video.style.display = "block";
-                    session.video.id = "video_out";
-                    video_out.appendChild(session.video);
-                    //session.resumeAudio();
+                    document.getElementById("video_out").style.display = "block";
+                    document.getElementById("video_out").muted= false;
                 }
             }else{
                 document.getElementById("video_out").style.display = "none";
@@ -70,10 +73,7 @@ app.controller("RtcController", function($scope,$log){
         self.talk = true;
         console.log(self.theOther)
         self.theOther.send({data: 1 });
-        phone.video.style.display = "block";
-        phone.video.id = "video_in";
-        phone.video.setAttribute("muted", "");
-        video_in.appendChild(phone.video);
+        document.getElementById("video_in").style.display = "block";
     }
 
     self.end = function(){
