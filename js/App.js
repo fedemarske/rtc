@@ -28,8 +28,8 @@ app.controller("RtcController", function($scope,$log){
                 phone.video.style.display = "none";
                 phone.video.id = "video_in";
                 phone.video.muted = true;
-                phone.video.style.borderRadius = "165px";
-                phone.video.style.background = "black";
+                //phone.video.style.borderRadius = "165px";
+                //phone.video.style.background = "black";
                 video_in.appendChild(phone.video);
             })
         });
@@ -43,8 +43,8 @@ app.controller("RtcController", function($scope,$log){
                     session.video.muted = true;
                     session.video.width  = 200;
                     session.video.height = 200;
-                    session.video.style.borderRadius = "165px";
-                    session.video.style.background = "black";
+                    //session.video.style.borderRadius = "165px";
+                    //session.video.style.background = "black";
                     video_out.appendChild(session.video);
                 });
             });
