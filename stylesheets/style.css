@@ -2,8 +2,8 @@
 
   /* background-color: blue; */
 
-  width: 250px;
-  height: 250px;
+  width: 150px;
+  height: 150px;
   border-radius: 125px;
 
   /* position: relative; */
@@ -18,11 +18,11 @@
 }
 
 .v1 {
-	width: 500px;
-	height: 500px;
+	width: 400px;
+	height: 400px;
 	position: absolute;
-	top: 10px;
-	left: 235px;
+    top: 60px;
+    left: 360px;
 
 
   /* opacity: 0.5 */
@@ -30,8 +30,8 @@
 }
 
 .v2 {
-	width: 500px;
-	height: 500px;
+	width: 400px;
+	height: 400px;
 	position: absolute;
 	top: 10px;
 	left: 520px;
