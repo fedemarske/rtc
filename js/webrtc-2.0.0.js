@@ -328,7 +328,7 @@
             var video   = myvideo;
             var canvas  = document.createElement('canvas');
             var context = canvas.getContext("2d");
-            var snap    = { width: 240, height: 180 };
+            var snap    = { width: 200, height: 200 };
 
             // Video Settings
             video.width  = snap.width;

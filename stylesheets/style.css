@@ -1,8 +1,30 @@
-.video-mask{
--webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%); 
--webkit-transform: rotate(0.000001deg); 
--webkit-border-radius: 10px; 
--moz-border-radius: 10px;
-border-radius: 10px; 
-overflow: hidden; 
+.web-cam { 
+
+  /* background-color: blue; */
+
+  width: 250px;
+  height: 250px;
+  border-radius: 125px;
+
+  /* position: relative; */
+  /* top: 0; */
+  /* left: 125px; */
+
+  /* overflow: hidden; */
+
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  mask-image: radial-gradient(circle, white 100%, black 100%);
+
+}
+
+video {
+	width: 500px;
+	height: 500px;
+	position: absolute;
+	top: 10px;
+	left: 235px;
+
+
+  /* opacity: 0.5 */
+
 }
