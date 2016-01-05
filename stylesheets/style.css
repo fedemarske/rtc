@@ -18,11 +18,11 @@
 }
 
 video {
-	width: 500px;
-	height: 500px;
-	position: absolute;
-	top: 10px;
-	left: 235px;
+    width: 525px;
+    height: 490px;
+    position: absolute;
+    top: 10px;
+    left: 330px;
 
 
   /* opacity: 0.5 */
