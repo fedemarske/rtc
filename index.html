@@ -63,7 +63,7 @@
 			<!-- Use floating label instead of placeholder -->
 			<label>Ingrese un nombre</label>
 			<md-icon md-font-set="material-icons"> account_circle </md-icon>
-			<input name="username" ng-model="r.username" type="text">
+			<input name="username" ng-model="r.username" type="text" ng-keypress="($event.which === 13)?r.login():0">
 			<md-button class="md-raised md-primary" ng-click="r.login()" >Log In</md-button>
 		</md-input-container>
 	</md-content>
