@@ -18,8 +18,9 @@
 }
 
 .v1 {
-	width: 150px;
-    height: 200px;
+	width: 200px;
+    height: 150px;
+    margin: -35px;
 
 
   /* opacity: 0.5 */
@@ -27,9 +28,9 @@
 }
 
 .v2 {
-	width: 150px;
-    height: 200px;
-
+	width: 200px;
+    height: 150px;
+    margin: -35px;
 
 
   /* opacity: 0.5 */
