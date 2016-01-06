@@ -10,8 +10,9 @@ app.controller("RtcController", function($scope,$log){
     self.video_2 = null;
     self.theOther = null;
     self.userName = "";
+    self.join = false;
 
-    self.login = function() {
+    self.login = function(flag) {
         var user_name = self.username || "Anonymous";
         var phone = window.phone = PHONE({
             number        : user_name, // listen on username line else Anonymous
@@ -29,9 +30,10 @@ app.controller("RtcController", function($scope,$log){
                 phone.video.id = "video_in";
                 phone.video.muted = true;
                 phone.video.className = "v1";
-                //phone.video.style.borderRadius = "165px";
-                //phone.video.style.background = "black";
                 video_in.appendChild(phone.video);
+                if(flag){
+                    phone.dial(self.number);
+                }
             })
         });
         phone.receive(function(session){
@@ -45,8 +47,6 @@ app.controller("RtcController", function($scope,$log){
                     session.video.width  = 200;
                     session.video.height = 200;
                     session.video.className = "v2";
-                    //session.video.style.borderRadius = "165px";
-                    //session.video.style.background = "black";
                     video_out.appendChild(session.video);
                 });
             });
@@ -66,7 +66,6 @@ app.controller("RtcController", function($scope,$log){
             }else{
                 document.getElementById("video_out").style.display = "none";
                 document.getElementById("video_out").muted= true;
-                //session.stopAudio();
             }
         } );
         return false;
@@ -74,7 +73,8 @@ app.controller("RtcController", function($scope,$log){
 
     self.makeCall = function(){
         self.videoOut = true;
-        phone.dial(self.number);
+        self.login(1);
+        self.join = false;
     }
 
     self.pushToTalk = function(){

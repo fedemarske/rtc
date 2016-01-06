@@ -33,7 +33,6 @@
 				</md-card-title-media>
 			</md-card-title>
 			<md-card-actions layout="row" layout-align="end center" style="z-index: 9999;">
-				<!-- <md-button>Log Out</md-button> -->
 				<md-button ng-click="r.pushToTalk()" ng-show="!r.talk">Press To Talk</md-button>
 				<md-button ng-click="r.end()" ng-show="r.talk">Press To Mute</md-button>
 			</md-card-actions>
@@ -50,13 +49,6 @@
 				<md-button ng-click="r.endConnection()">End Connection</md-button>
 			</md-card-actions>
 		</md-card>
-		<md-input-container class="md-icon-float md-block" ng-show="!r.videoOut">
-			<!-- Use floating label instead of placeholder -->
-			<label>Ingrese un nombre para llamar</label>
-			<md-icon md-font-set="material-icons"> call </md-icon>
-			<input name="number" ng-model="r.number" type="text">
-			<md-button class="md-raised md-primary" ng-click="r.makeCall()">Connect</md-button>
-		</md-input-container>
 	</div>
 	<md-content class="autoScroll" layout="column" layout-align="center center">
 		<md-input-container class="md-icon-float md-block" ng-show="!r.loginSuccess">
@@ -64,7 +56,15 @@
 			<label>Ingrese un nombre</label>
 			<md-icon md-font-set="material-icons"> account_circle </md-icon>
 			<input name="username" ng-model="r.username" type="text" ng-keypress="($event.which === 13)?r.login():0">
-			<md-button class="md-raised md-primary" ng-click="r.login()" >Log In</md-button>
+			<md-button class="md-raised md-primary" ng-show="!r.join" ng-click="r.login()" >Create a room</md-button>
+			<md-button class="md-raised md-primary" ng-show="!r.join" ng-click="r.join = true" >Join a room</md-button>
+		</md-input-container>
+		<md-input-container class="md-icon-float md-block" ng-show="r.join">
+			<!-- Use floating label instead of placeholder -->
+			<label>Room Name</label>
+			<md-icon md-font-set="material-icons"> call </md-icon>
+			<input name="number" ng-model="r.number" type="text">
+			<md-button class="md-raised md-primary" ng-click="r.makeCall()">Join</md-button>
 		</md-input-container>
 	</md-content>
 </div>
