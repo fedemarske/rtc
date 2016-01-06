@@ -27,9 +27,7 @@
 		<md-card>
 			<md-card-title>
 				<md-card-title-media>
-					<div id="vid-box-local" class="web-cam">
-						
-					</div>
+					<div id="vid-box-local" class="web-cam"></div>
 				</md-card-title-media>
 			</md-card-title>
 			<md-card-actions layout="row" layout-align="end center" style="z-index: 9999;">
@@ -37,12 +35,22 @@
 				<md-button ng-click="r.end()" ng-show="r.talk">Press To Mute</md-button>
 			</md-card-actions>
 		</md-card>
+
 		<md-card ng-show="r.videoOut">
 			<md-card-title>
 				<md-card-title-media>
-					<div id="vid-box" class="web-cam">
-						
-					</div>
+					<div id="vid-box" class="web-cam"></div>
+				</md-card-title-media>
+			</md-card-title>
+			<md-card-actions layout="row" layout-align="end center" style="z-index: 9999;">
+				<md-button ng-click="r.endConnection()">End Connection</md-button>
+			</md-card-actions>
+		</md-card>
+
+		<md-card ng-show="r.videoOut2">
+			<md-card-title>
+				<md-card-title-media>
+					<div id="vid-box-2" class="web-cam"></div>
 				</md-card-title-media>
 			</md-card-title>
 			<md-card-actions layout="row" layout-align="end center" style="z-index: 9999;">
@@ -56,8 +64,8 @@
 			<label>Ingrese un nombre</label>
 			<md-icon md-font-set="material-icons"> account_circle </md-icon>
 			<input name="username" ng-model="r.username" type="text" ng-keypress="($event.which === 13)?r.login():0">
-			<md-button class="md-raised md-primary" ng-show="!r.join" ng-click="r.login()" >Create a room</md-button>
-			<md-button class="md-raised md-primary" ng-show="!r.join" ng-click="r.join = true" >Join a room</md-button>
+			<md-button class="md-raised md-primary" ng-show="!r.join" ng-click="r.login(1)" >Create a room</md-button>
+			<md-button class="md-raised md-primary" ng-show="!r.join" ng-click="r.joinRoom()" >Join a room</md-button>
 		</md-input-container>
 		<md-input-container class="md-icon-float md-block" ng-show="r.join">
 			<!-- Use floating label instead of placeholder -->
@@ -88,6 +96,7 @@
 
 var video_hold = document.getElementById("video-chat");
 var video_out  = document.getElementById("vid-box");
+var video_out_2  = document.getElementById("vid-box-2");
 var video_in  = document.getElementById("vid-box-local");
 var form_block = document.getElementById("form-box")
    

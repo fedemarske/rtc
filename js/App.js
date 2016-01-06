@@ -6,11 +6,14 @@ app.controller("RtcController", function($scope,$log){
     self.videos = false;
     self.loginSuccess = false;
     self.videoOut = false;
+    self.videoOut2 = false;
     self.talk = false;
     self.video_2 = null;
     self.theOther = null;
     self.userName = "";
     self.join = false;
+    self.sessions = [];
+    self.hoster = false;
 
     self.login = function(flag) {
         var user_name = self.username || "Anonymous";
@@ -21,10 +24,9 @@ app.controller("RtcController", function($scope,$log){
             datachannels  : true,  // Enable Data Channels
             ssl: true
         });
+
         phone.ready(function(){
             $scope.$apply(function(){
-                self.loginSuccess = true;
-                self.videos = true;
                 self.userName = phone.number();
                 phone.video.style.display = "none";
                 phone.video.id = "video_in";
@@ -32,22 +34,42 @@ app.controller("RtcController", function($scope,$log){
                 phone.video.className = "v1";
                 video_in.appendChild(phone.video);
                 if(flag){
-                    phone.dial(self.number);
+                    self.loginSuccess = true;
+                    self.videos = true;
+                    self.hoster = true;
                 }
             })
         });
+
         phone.receive(function(session){
             session.connected(function(session) {
                 $scope.$apply(function(){
-                    self.videoOut = true;
-                    self.theOther = session;
-                    session.video.style.display = "none";
-                    session.video.id = "video_out";
-                    session.video.muted = true;
-                    session.video.width  = 200;
-                    session.video.height = 200;
-                    session.video.className = "v2";
-                    video_out.appendChild(session.video);
+                    if($('#vid-box').is(':empty')){
+                        console.log("primer div")
+                        self.videoOut = true;
+                        self.theOther = session;
+                        session.video.style.display = "none";
+                        session.video.id = session.number;
+                        session.video.muted = true;
+                        session.video.width  = 200;
+                        session.video.height = 200;
+                        session.video.className = "v2";
+                        video_out.appendChild(session.video);
+                    }else{
+                        console.log(session)
+                        self.theOther2 = session;
+                        self.videoOut2 = true;
+                        session.video.style.display = "none";
+                        session.video.id = session.number;
+                        session.video.muted = true;
+                        session.video.width  = 200;
+                        session.video.height = 200;
+                        session.video.className = "v2";
+                        video_out_2.appendChild(session.video);
+                        if(self.hoster){
+                            session.send({otherSession: self.theOther.number})
+                        }
+                    }
                 });
             });
             session.ended(function(session) {
@@ -56,37 +78,55 @@ app.controller("RtcController", function($scope,$log){
                 self.videoOut = false;
             });
         });
+
         phone.message(function(session, message) {
             console.log(message)
-            if(message.data){
-                if(phone.number() !== session.number){
-                    document.getElementById("video_out").style.display = "block";
-                    document.getElementById("video_out").muted= false;
-                }
+            if(message.otherSession && phone.number() !== session.number){
+                phone.dial(message.otherSession);
             }else{
-                document.getElementById("video_out").style.display = "none";
-                document.getElementById("video_out").muted= true;
+                if(message.data){
+                    if(phone.number() !== session.number){
+                        document.getElementById(session.number).style.display = "block";
+                        document.getElementById(session.number).muted= false;
+                    }
+                }else{
+                    document.getElementById(session.number).style.display = "none";
+                    document.getElementById(session.number).muted= true;
+                }
             }
         } );
         return false;
     }
 
     self.makeCall = function(){
+        self.loginSuccess = true;
+        self.videos = true;
         self.videoOut = true;
-        self.login(1);
         self.join = false;
+        phone.dial(self.number)
+    }
+
+    self.joinRoom = function(){
+        self.join = true;
+        self.login();
     }
 
     self.pushToTalk = function(){
         self.talk = true;
         console.log(self.theOther)
         self.theOther.send({data: 1 });
+        if(self.theOther2){
+            self.theOther2.send({data: 1 });
+        }
         document.getElementById("video_in").style.display = "block";
     }
 
     self.end = function(){
         if (!window.phone) return;
         self.theOther.send({data: 0 });
+        if(self.theOther2){
+                    self.theOther2.send({data: 0 });
+        }
         document.getElementById("video_in").style.display = "none";
         self.talk = false;
     }
