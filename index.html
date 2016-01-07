@@ -31,8 +31,7 @@
 				</md-card-title-media>
 			</md-card-title>
 			<md-card-actions layout="row" layout-align="end center" style="z-index: 9999;">
-				<md-button ng-click="r.pushToTalk()" ng-show="!r.talk">Press To Talk</md-button>
-				<md-button ng-click="r.end()" ng-show="r.talk">Press To Mute</md-button>
+				<md-button ng-mousedown="r.pushToTalk()" ng-mouseup="r.end()">{{r.talkMute}}</md-button>
 			</md-card-actions>
 		</md-card>
 

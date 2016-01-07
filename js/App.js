@@ -14,6 +14,7 @@ app.controller("RtcController", function($scope,$log){
     self.join = false;
     self.sessions = [];
     self.hoster = false;
+    self.talkMute = "Push To Talk";
 
     self.login = function(flag) {
         var user_name = self.username || "Anonymous";
@@ -112,7 +113,7 @@ app.controller("RtcController", function($scope,$log){
     }
 
     self.pushToTalk = function(){
-        self.talk = true;
+        self.talkMute = "Push To Mute";
         console.log(self.theOther)
         self.theOther.send({data: 1 });
         if(self.theOther2){
@@ -127,8 +128,8 @@ app.controller("RtcController", function($scope,$log){
         if(self.theOther2){
                     self.theOther2.send({data: 0 });
         }
-        document.getElementById("video_in").style.display = "none";
-        self.talk = false;
+        document.getElementById("video_in").style.display = "none"
+        self.talkMute = "Push To Talk";
     }
 
     self.endConnection = function(){
