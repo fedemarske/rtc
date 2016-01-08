@@ -22,6 +22,7 @@
 
 <div layout="column"  ng-controller="RtcController as r" layout-padding ng-cloak>
 	<h4 layout="column" layout-align="center center">WEB RTC</h4>
+	<h4 layout="column" layout-align="center center" ng-show="r.videos">Room Name: {{r.hosterName}}</h4>
 	<div layout="row" layout-xs="column" layout-align="center center" id="video-chat" ng-show="r.videos">
 		<md-card>
 			<md-card-title class="fix">

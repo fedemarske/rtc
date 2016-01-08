@@ -14,6 +14,7 @@ app.controller("RtcController", function($scope,$log){
     self.join = false;
     self.sessions = [];
     self.hoster = false;
+    self.hosterName = "";
     self.talkMute = "Push To Talk";
 
     self.login = function(flag) {
@@ -40,6 +41,7 @@ app.controller("RtcController", function($scope,$log){
                     self.videos = true;
                     self.hoster = true;
                     objSession.hoster = true;
+                    self.hosterName = phone.number();
                 }
                 self.sessions.push(objSession)
             })
@@ -50,6 +52,9 @@ app.controller("RtcController", function($scope,$log){
                 self.talk = true;
                 $scope.$apply(function(){
                     if($('#vid-box').is(':empty')){
+                        if(!self.hoster){
+                            self.hosterName = session.number;
+                        }
                         console.log("primer div")
                         self.videoOut = true;
                         self.theOther = session;
