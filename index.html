@@ -33,7 +33,7 @@
 		        </md-card-header>
 			</md-card-title>
 			<md-card-actions layout="row" layout-align="end center" style="z-index: 9999;">
-				<md-button ng-mousedown="r.pushToTalk()" ng-mouseup="r.end()">{{r.talkMute}}</md-button>
+				<md-button ng-mousedown="r.pushToTalk()" ng-show="r.talk" ng-mouseup="r.end()">{{r.talkMute}}</md-button>
 			</md-card-actions>
 		</md-card>
 

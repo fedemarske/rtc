@@ -47,6 +47,7 @@ app.controller("RtcController", function($scope,$log){
 
         phone.receive(function(session){
             session.connected(function(session) {
+                self.talk = true;
                 $scope.$apply(function(){
                     if($('#vid-box').is(':empty')){
                         console.log("primer div")
@@ -59,9 +60,6 @@ app.controller("RtcController", function($scope,$log){
                         session.video.height = 100;
                         session.video.className = "v2";
                         video_out.appendChild(session.video);
-                        if(self.hoster){
-
-                        }
                     }else{
                         self.theOther2 = session;
                         self.videoOut2 = true;
@@ -79,9 +77,12 @@ app.controller("RtcController", function($scope,$log){
                 });
             });
             session.ended(function(session) {
-                video_out.innerHTML='';
-                self.talk = false;
-                self.videoOut = false;
+                $scope.$apply(function(){
+                    console.log(session)
+                    self.videoOut = false;
+                    self.talk = false;
+                    $('#' + session.number).remove();
+                })
             });
         });
 
@@ -120,7 +121,6 @@ app.controller("RtcController", function($scope,$log){
 
     self.pushToTalk = function(){
         self.talkMute = "Push To Mute";
-        console.log(self.theOther)
         self.theOther.send({data: 1 });
         if(self.theOther2){
             self.theOther2.send({data: 1 });
@@ -132,14 +132,17 @@ app.controller("RtcController", function($scope,$log){
         if (!window.phone) return;
         self.theOther.send({data: 0 });
         if(self.theOther2){
-                    self.theOther2.send({data: 0 });
+            self.theOther2.send({data: 0 });
         }
         document.getElementById("video_in").style.display = "none"
         self.talkMute = "Push To Talk";
     }
 
     self.endConnection = function(){
-        window.phone.hangup();
+        self.loginSuccess = false;
+        self.videos = false;
         self.videoOut = false;
+        self.join = true;
+        window.phone.hangup();
     }
 });
