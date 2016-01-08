@@ -26,11 +26,6 @@ app.controller("RtcController", function($scope,$log){
             ssl: true
         });
 
-        if(flag){
-            phone.hoster = true;
-        }
-
-
         phone.ready(function(){
             $scope.$apply(function(){
                 self.userName = phone.number();
@@ -39,11 +34,14 @@ app.controller("RtcController", function($scope,$log){
                 phone.video.muted = true;
                 phone.video.className = "v1";
                 video_in.appendChild(phone.video);
+                var objSession = {number: phone.number()}
                 if(flag){
                     self.loginSuccess = true;
                     self.videos = true;
                     self.hoster = true;
+                    objSession.hoster = true;
                 }
+                self.sessions.push(objSession)
             })
         });
 
@@ -58,9 +56,12 @@ app.controller("RtcController", function($scope,$log){
                         session.video.id = session.number;
                         session.video.muted = true;
                         session.video.width  = 200;
-                        session.video.height = 200;
+                        session.video.height = 100;
                         session.video.className = "v2";
                         video_out.appendChild(session.video);
+                        if(self.hoster){
+
+                        }
                     }else{
                         self.theOther2 = session;
                         self.videoOut2 = true;
@@ -68,7 +69,7 @@ app.controller("RtcController", function($scope,$log){
                         session.video.id = session.number;
                         session.video.muted = true;
                         session.video.width  = 200;
-                        session.video.height = 200;
+                        session.video.height = 100;
                         session.video.className = "v2";
                         video_out_2.appendChild(session.video);
                         if(self.hoster){

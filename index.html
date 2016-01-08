@@ -22,13 +22,12 @@
 
 <div layout="column"  ng-controller="RtcController as r" layout-padding ng-cloak>
 	<h4 layout="column" layout-align="center center">WEB RTC</h4>
-	<br/>
-	<div layout="row" layout-align="center center" id="video-chat" ng-show="r.videos">
+	<div layout="row" layout-xs="column" layout-align="center center" id="video-chat" ng-show="r.videos">
 		<md-card>
-			<md-card-title>
-		        <md-card-header>
+			<md-card-title class="fix">
+		        <md-card-header class="fix2">
 		          <md-card-header-text>
-		            <span class="md-title">Username: {{r.userName}}</span>
+		            <span class="md-title">User: {{r.userName}}</span>
 		            <div id="vid-box-local" class="web-cam"></div>
 		          </md-card-header-text>
 		        </md-card-header>
@@ -39,10 +38,10 @@
 		</md-card>
 
 		<md-card ng-show="r.videoOut">
-			<md-card-title>
-		        <md-card-header>
+			<md-card-title class="fix">
+		        <md-card-header class="fix2">
 		          <md-card-header-text>
-		            <span class="md-title">Username: {{r.theOther.number}}</span>
+		            <span class="md-title">User: {{r.theOther.number}}</span>
 		            <div id="vid-box" class="web-cam"></div>
 		          </md-card-header-text>
 		        </md-card-header>
@@ -53,10 +52,10 @@
 		</md-card>
 
 		<md-card ng-show="r.videoOut2">
-			<md-card-title>
-		        <md-card-header>
+			<md-card-title class="fix">
+		        <md-card-header class="fix2">
 		          <md-card-header-text>
-		            <span class="md-title">Username: {{r.theOther2.number}}</span>
+		            <span class="md-title">User: {{r.theOther2.number}}</span>
 		            <div id="vid-box-2" class="web-cam"></div>
 		          </md-card-header-text>
 		        </md-card-header>

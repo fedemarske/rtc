@@ -1,12 +1,20 @@
 .web-cam { 
 
   width: 200px;
-  height: 200px;
+  height: 100px;
   border-radius: 125px;
 
   /*-webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
   mask-image: radial-gradient(circle, white 100%, black 100%);*/
 
+}
+
+.fix{
+  padding: 15px 16px 14px;
+}
+
+.fix2{
+  padding: 0px;
 }
 
 /*
