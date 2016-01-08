@@ -26,9 +26,12 @@
 	<div layout="row" layout-align="center center" id="video-chat" ng-show="r.videos">
 		<md-card>
 			<md-card-title>
-				<md-card-title-media>
-					<div id="vid-box-local" class="web-cam"></div>
-				</md-card-title-media>
+		        <md-card-header>
+		          <md-card-header-text>
+		            <span class="md-title">Username: {{r.userName}}</span>
+		            <div id="vid-box-local" class="web-cam"></div>
+		          </md-card-header-text>
+		        </md-card-header>
 			</md-card-title>
 			<md-card-actions layout="row" layout-align="end center" style="z-index: 9999;">
 				<md-button ng-mousedown="r.pushToTalk()" ng-mouseup="r.end()">{{r.talkMute}}</md-button>
@@ -37,9 +40,12 @@
 
 		<md-card ng-show="r.videoOut">
 			<md-card-title>
-				<md-card-title-media>
-					<div id="vid-box" class="web-cam"></div>
-				</md-card-title-media>
+		        <md-card-header>
+		          <md-card-header-text>
+		            <span class="md-title">Username: {{r.theOther.number}}</span>
+		            <div id="vid-box" class="web-cam"></div>
+		          </md-card-header-text>
+		        </md-card-header>
 			</md-card-title>
 			<md-card-actions layout="row" layout-align="end center" style="z-index: 9999;">
 				<md-button ng-click="r.endConnection()">End Connection</md-button>
@@ -48,9 +54,12 @@
 
 		<md-card ng-show="r.videoOut2">
 			<md-card-title>
-				<md-card-title-media>
-					<div id="vid-box-2" class="web-cam"></div>
-				</md-card-title-media>
+		        <md-card-header>
+		          <md-card-header-text>
+		            <span class="md-title">Username: {{r.theOther2.number}}</span>
+		            <div id="vid-box-2" class="web-cam"></div>
+		          </md-card-header-text>
+		        </md-card-header>
 			</md-card-title>
 			<md-card-actions layout="row" layout-align="end center" style="z-index: 9999;">
 				<md-button ng-click="r.endConnection()">End Connection</md-button>

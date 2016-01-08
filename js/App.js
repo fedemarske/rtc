@@ -26,6 +26,11 @@ app.controller("RtcController", function($scope,$log){
             ssl: true
         });
 
+        if(flag){
+            phone.hoster = true;
+        }
+
+
         phone.ready(function(){
             $scope.$apply(function(){
                 self.userName = phone.number();
@@ -57,7 +62,6 @@ app.controller("RtcController", function($scope,$log){
                         session.video.className = "v2";
                         video_out.appendChild(session.video);
                     }else{
-                        console.log(session)
                         self.theOther2 = session;
                         self.videoOut2 = true;
                         session.video.style.display = "none";
@@ -86,6 +90,7 @@ app.controller("RtcController", function($scope,$log){
                 phone.dial(message.otherSession);
             }else{
                 if(message.data){
+                    console.log(session)
                     if(phone.number() !== session.number){
                         document.getElementById(session.number).style.display = "block";
                         document.getElementById(session.number).muted= false;

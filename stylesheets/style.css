@@ -1,29 +1,20 @@
 .web-cam { 
 
-  /* background-color: blue; */
-
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   border-radius: 125px;
 
-  /* position: relative; */
-  /* top: 0; */
-  /* left: 125px; */
-
-  /* overflow: hidden; */
-
-  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
-  mask-image: radial-gradient(circle, white 100%, black 100%);
+  /*-webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  mask-image: radial-gradient(circle, white 100%, black 100%);*/
 
 }
 
+/*
 .v1 {
 	width: 200px;
     height: 150px;
     margin: -35px;
 
-
-  /* opacity: 0.5 */
 
 }
 
@@ -33,6 +24,6 @@
     margin: -35px;
 
 
-  /* opacity: 0.5 */
 
 }
+*/
