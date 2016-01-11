@@ -24,7 +24,7 @@
 	<h4 layout="column" layout-align="center center">WEB RTC</h4>
 	<h4 layout="column" layout-align="center center" ng-show="r.videos">Room Name: {{r.hosterName}}</h4>
 	<div layout="row" layout-xs="column" layout-align="center center" id="video-chat" ng-show="r.videos">
-		<md-card>
+		<!--<md-card>
 			<md-card-title class="fix">
 		        <md-card-header class="fix2">
 		          <md-card-header-text>
@@ -36,9 +36,15 @@
 			<md-card-actions layout="row" layout-align="end center" style="z-index: 9999;">
 				<md-button ng-mousedown="r.pushToTalk()" ng-show="r.talk" ng-mouseup="r.end()">{{r.talkMute}}</md-button>
 			</md-card-actions>
-		</md-card>
+		</md-card>-->
 
-		<md-card ng-show="r.videoOut">
+		<div layout="column" layout-align="center center">
+            <span class="md-title">{{r.userName}}</span>
+            <div id="vid-box-local" class="web-cam"></div>
+			<md-button ng-mousedown="r.pushToTalk()" ng-show="r.talk" ng-mouseup="r.end()">{{r.talkMute}}</md-button>
+		</div>
+
+		<!--<md-card ng-show="r.videoOut">
 			<md-card-title class="fix">
 		        <md-card-header class="fix2">
 		          <md-card-header-text>
@@ -49,7 +55,12 @@
 			</md-card-title>
 			<md-card-actions layout="row" layout-align="end center" style="z-index: 9999;">
 			</md-card-actions>
-		</md-card>
+		</md-card>-->
+
+		<div layout="column" layout-align="center center" class="others" ng-show="r.videoOut">
+            <span class="md-title">{{r.theOther.number}}</span>
+            <div id="vid-box" class="web-cam"></div>
+		</div>
 
 		<md-card ng-show="r.videoOut2">
 			<md-card-title class="fix">
