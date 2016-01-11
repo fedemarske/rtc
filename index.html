@@ -20,7 +20,7 @@
 </head>
 <body ng-app="RtcApp">
 
-<div layout="column"  ng-controller="RtcController as r" layout-padding ng-cloak>
+<div layout="column"  ng-controller="RtcController as r" ng-cloak>
 	<h4 layout="column" layout-align="center center">WEB RTC</h4>
 	<h4 layout="column" layout-align="center center" ng-show="r.videos">Room Name: {{r.hosterName}}</h4>
 	<div layout="row" layout-xs="column" layout-align="center center" id="video-chat" ng-show="r.videos">
@@ -75,7 +75,7 @@
 			</md-card-actions>
 		</md-card>
 	</div>
-	<md-content class="autoScroll" layout="column" layout-align="center center">
+	<md-content layout="column" layout-align="center center">
 		<md-input-container class="md-icon-float md-block" ng-show="!r.loginSuccess">
 			<!-- Use floating label instead of placeholder -->
 			<label>Ingrese un nombre</label>
