@@ -169,6 +169,11 @@ app.controller("RtcController", function($scope,$log){
         media         : { audio : false, video : true },
     });
 
+    room.ready(function(){
+        room.stop();
+    });
+
+
     room.receive(function(session){
         session.connected(function(session) {
             console.log(self.sessions.indexOf(session.number));
