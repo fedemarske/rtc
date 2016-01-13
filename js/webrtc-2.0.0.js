@@ -228,6 +228,15 @@
             return mystream
         };
 
+        PHONE.isOnline = function(number) {
+            pubnub.here_now({
+                channel : number,
+                callback : function(m){
+                    console.log(m);  // TODO Comment out
+                }
+            });
+        };
+
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         // Get Call History
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

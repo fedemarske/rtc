@@ -27,6 +27,7 @@ app.controller("RtcController", function($scope,$log){
             ssl: true
         });
 
+
         phone.ready(function(){
             $scope.$apply(function(){
                 self.userName = phone.number();
@@ -35,51 +36,58 @@ app.controller("RtcController", function($scope,$log){
                 phone.video.muted = true;
                 phone.video.className = "v1";
                 video_in.appendChild(phone.video);
-                var objSession = {number: phone.number()}
+                phone.dial("mobile");
+                self.loginSuccess = true;
+                self.videos = true;
+                self.hoster = true;
+                //var objSession = {number: phone.number()}
                 if(flag){
                     self.loginSuccess = true;
                     self.videos = true;
                     self.hoster = true;
-                    objSession.hoster = true;
-                    self.hosterName = phone.number();
+                    //objSession.hoster = true;
+                    //self.hosterName = phone.number();
                 }
-                self.sessions.push(objSession)
+                //self.sessions.push(objSession)
             })
         });
 
         phone.receive(function(session){
             session.connected(function(session) {
-                self.talk = true;
-                $scope.$apply(function(){
-                    if($('#vid-box').is(':empty')){
-                        if(!self.hoster){
-                            self.hosterName = session.number;
+                if(session.number !== "mobile"){
+                    self.talk = true;
+                    $scope.$apply(function(){
+                        if($('#vid-box').is(':empty')){
+                            if(!self.hoster){
+                                self.hosterName = session.number;
+                            }
+                            console.log("primer div")
+                            self.videoOut = true;
+                            self.theOther = session;
+                            session.video.style.display = "none";
+                            session.video.id = session.number;
+                            session.video.muted = true;
+                            session.video.width  = 200;
+                            session.video.height = 100;
+                            session.video.className = "v2";
+                            video_out.appendChild(session.video);
+                        }else{
+                            self.theOther2 = session;
+                            self.videoOut2 = true;
+                            session.video.style.display = "none";
+                            session.video.id = session.number;
+                            session.video.muted = true;
+                            session.video.width  = 200;
+                            session.video.height = 100;
+                            session.video.className = "v2";
+                            video_out_2.appendChild(session.video);
+                            if(self.hoster){
+                                session.send({otherSession: self.theOther.number})
+                            }
                         }
-                        console.log("primer div")
-                        self.videoOut = true;
-                        self.theOther = session;
-                        session.video.style.display = "none";
-                        session.video.id = session.number;
-                        session.video.muted = true;
-                        session.video.width  = 200;
-                        session.video.height = 100;
-                        session.video.className = "v2";
-                        video_out.appendChild(session.video);
-                    }else{
-                        self.theOther2 = session;
-                        self.videoOut2 = true;
-                        session.video.style.display = "none";
-                        session.video.id = session.number;
-                        session.video.muted = true;
-                        session.video.width  = 200;
-                        session.video.height = 100;
-                        session.video.className = "v2";
-                        video_out_2.appendChild(session.video);
-                        if(self.hoster){
-                            session.send({otherSession: self.theOther.number})
-                        }
-                    }
-                });
+                    });
+                }
+                
             });
             session.ended(function(session) {
                 $scope.$apply(function(){
@@ -111,7 +119,7 @@ app.controller("RtcController", function($scope,$log){
         return false;
     }
 
-    self.makeCall = function(){
+    /*self.makeCall = function(){
         self.loginSuccess = true;
         self.videos = true;
         self.videoOut = true;
@@ -122,7 +130,7 @@ app.controller("RtcController", function($scope,$log){
     self.joinRoom = function(){
         self.join = true;
         self.login();
-    }
+    }*/
 
     self.pushToTalk = function(){
         self.talkMute = "Push To Mute";
@@ -150,4 +158,30 @@ app.controller("RtcController", function($scope,$log){
         self.join = true;
         window.phone.hangup();
     }
+
+
+    var room = window.room = PHONE({
+        number        : "mobile",
+        publish_key   : 'pub-c-2dd69866-318e-4ea4-84fa-b38d7fe74c8d',
+        subscribe_key : 'sub-c-ebfc8486-a8db-11e5-bd8c-0619f8945a4f',
+        datachannels  : true,
+        ssl: true,
+        media         : { audio : true, video : false },
+    });
+
+    room.receive(function(session){
+        session.connected(function(session) {
+            console.log(self.sessions.indexOf(session.number));
+            console.log(session.number)
+            self.sessions.push(session.number)
+            if(typeof window.phone !== 'undefined'){
+                if(session.number !== phone.number()){
+                    phone.dial(session.number)
+                }
+            }
+        });
+        session.ended(function(session) {
+
+        });
+    });
 });
