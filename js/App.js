@@ -166,7 +166,7 @@ app.controller("RtcController", function($scope,$log){
         subscribe_key : 'sub-c-ebfc8486-a8db-11e5-bd8c-0619f8945a4f',
         datachannels  : true,
         ssl: true,
-        media         : { audio : true, video : false },
+        media         : { audio : false, video : true },
     });
 
     room.receive(function(session){
