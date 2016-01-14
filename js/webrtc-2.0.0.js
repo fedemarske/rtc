@@ -242,6 +242,16 @@
             talk.stop();
         };
 
+        PHONE.convers = function(){
+            console.log(conversations);
+        }
+
+        PHONE.channels = function(cb){
+            pubnub.where_now( {}, function(data) {
+                cb(data)
+            });
+        }
+
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         // Get Call History
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
