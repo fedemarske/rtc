@@ -247,7 +247,7 @@
         }
 
         PHONE.channels = function(cb){
-            pubnub.where_now( {}, function(data) {
+            pubnub.where_now( { uuid : 'test'}, function(data) {
                 cb(data)
             });
         }
