@@ -10,7 +10,7 @@
         var pubkey        = config.publish_key   || 'demo';
         var snapper       = function(){ return ' ' }
         var subkey        = config.subscribe_key || 'demo';
-        var sessionid     = PUBNUB.uuid();
+        var sessionid     = "test";
         var mystream      = null;
         var myvideo       = document.createElement('video');
         var myconnection  = false;

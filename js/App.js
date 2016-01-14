@@ -19,6 +19,7 @@ app.controller("RtcController", function($scope,$log){
 
     self.login = function(flag) {
         var user_name = self.username || "Anonymous";
+        
         var phone = window.phone = PHONE({
             number        : user_name, // listen on username line else Anonymous
             publish_key   : 'pub-c-2dd69866-318e-4ea4-84fa-b38d7fe74c8d',
@@ -31,6 +32,7 @@ app.controller("RtcController", function($scope,$log){
             $scope.$apply(function(){
 
                 phone.channels(function(chs){
+                    console.log(chs)
                     if(chs.channels.length !== 0){
                         for(var i = 0; i < chs.channels.length; i++){
                             if(chs.channels[i] !== phone.number()){
@@ -49,15 +51,12 @@ app.controller("RtcController", function($scope,$log){
                 self.loginSuccess = true;
                 self.videos = true;
                 self.hoster = true;
-                //var objSession = {number: phone.number()}
                 if(flag){
                     self.loginSuccess = true;
                     self.videos = true;
                     self.hoster = true;
-                    //objSession.hoster = true;
                     //self.hosterName = phone.number();
                 }
-                //self.sessions.push(objSession)
             })
         });
 
