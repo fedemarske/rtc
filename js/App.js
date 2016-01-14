@@ -19,13 +19,14 @@ app.controller("RtcController", function($scope,$log){
 
     self.login = function(flag) {
         var user_name = self.username || "Anonymous";
-        
+
         var phone = window.phone = PHONE({
             number        : user_name, // listen on username line else Anonymous
             publish_key   : 'pub-c-2dd69866-318e-4ea4-84fa-b38d7fe74c8d',
             subscribe_key : 'sub-c-ebfc8486-a8db-11e5-bd8c-0619f8945a4f',
             datachannels  : true,  // Enable Data Channels
-            ssl: true
+            ssl: true,
+            uuid: "fede"
         });
 
         phone.ready(function(){
