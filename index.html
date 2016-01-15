@@ -41,21 +41,24 @@
             <div id="vid-box-2" class="web-cam"></div>
 		</div>
 	</div>
-	<md-content layout="column" layout-align="center center">
-		<md-input-container class="md-icon-float md-block" ng-show="!r.loginSuccess">
+	<md-content layout="column" layout-align="center center" ng-show="!r.loginSuccess">
+		<md-input-container class="md-icon-float md-block">
 			<!-- Use floating label instead of placeholder -->
 			<label>Ingrese un nombre</label>
 			<md-icon md-font-set="material-icons"> account_circle </md-icon>
 			<input name="username" ng-model="r.username" type="text" ng-keypress="($event.which === 13)?r.login():0">
-			<!--<md-button class="md-raised md-primary" ng-show="!r.join" ng-click="r.login(1)" >Create a room</md-button>-->
-			<md-button class="md-raised md-primary" ng-show="!r.join" ng-click="r.login()" >Join a room</md-button>
+			<!--<md-button class="md-raised md-primary" ng-show="!r.join" ng-click="r.login(1)" >Create a room</md-button>
+			<md-button class="md-raised md-primary" ng-show="!r.join" ng-click="r.login()" >Join a room</md-button>-->
 		</md-input-container>
-		<md-input-container class="md-icon-float md-block" ng-show="r.join">
+		<md-input-container class="md-icon-float md-block">
 			<!-- Use floating label instead of placeholder -->
 			<label>Room Name</label>
 			<md-icon md-font-set="material-icons"> call </md-icon>
-			<input name="number" ng-model="r.number" type="text">
-			<md-button class="md-raised md-primary" ng-click="r.makeCall()">Join</md-button>
+			<input name="number" ng-model="r.number" type="text" disabled>
+		</md-input-container>
+		<md-input-container class="md-icon-float md-block">
+			<md-button class="md-raised md-primary" ng-show="!r.join" ng-click="r.login(1)" >Create a room</md-button>
+			<md-button class="md-raised md-primary" ng-show="!r.join" ng-click="r.login()" >Join a room</md-button>
 		</md-input-container>
 	</md-content>
 </div>

@@ -16,8 +16,13 @@ app.controller("RtcController", function($scope,$log){
     self.hoster = false;
     self.hosterName = "";
     self.talkMute = "Push To Talk";
+    self.number = "mobile"
 
     self.login = function(flag) {
+        if(flag){
+            self.username = "mobile";
+        }
+
         var user_name = self.username || "Anonymous";
         var phone = window.phone = PHONE({
             number        : user_name, // listen on username line else Anonymous
@@ -31,62 +36,58 @@ app.controller("RtcController", function($scope,$log){
         phone.ready(function(){
             $scope.$apply(function(){
                 self.userName = phone.number();
+
                 phone.video.style.display = "none";
                 phone.video.id = "video_in";
                 phone.video.muted = true;
                 phone.video.className = "v1";
                 video_in.appendChild(phone.video);
-                phone.dial("mobile");
+
                 self.loginSuccess = true;
                 self.videos = true;
                 self.hoster = true;
-                //var objSession = {number: phone.number()}
+
                 if(flag){
-                    self.loginSuccess = true;
-                    self.videos = true;
-                    self.hoster = true;
-                    //objSession.hoster = true;
-                    //self.hosterName = phone.number();
+                    self.hosterName = phone.number();
+                }else{
+                    phone.dial(self.number);
                 }
-                //self.sessions.push(objSession)
             })
         });
 
         phone.receive(function(session){
             session.connected(function(session) {
-                if(session.number !== "mobile"){
-                    self.talk = true;
-                    $scope.$apply(function(){
-                        if($('#vid-box').is(':empty')){
-                            if(!self.hoster){
-                                self.hosterName = session.number;
-                            }
-                            console.log("primer div")
-                            self.videoOut = true;
-                            self.theOther = session;
-                            session.video.style.display = "none";
-                            session.video.id = session.number;
-                            session.video.muted = true;
-                            session.video.width  = 200;
-                            session.video.height = 100;
-                            session.video.className = "v2";
-                            video_out.appendChild(session.video);
-                        }else{
-                            self.theOther2 = session;
-                            self.videoOut2 = true;
-                            session.video.style.display = "none";
-                            session.video.id = session.number;
-                            session.video.muted = true;
-                            session.video.width  = 200;
-                            session.video.height = 100;
-                            session.video.className = "v2";
-                            video_out_2.appendChild(session.video);
-                            if(self.hoster){
-                                session.send({otherSession: self.theOther.number})
-                            }
+                self.talk = true;
+                $scope.$apply(function(){
+                    if($('#vid-box').is(':empty')){
+                        if(!self.hoster){
+                            self.hosterName = session.number;
                         }
-                    });
-                }
+                        console.log("primer div")
+                        self.videoOut = true;
+                        self.theOther = session;
+                        session.video.style.display = "none";
+                        session.video.id = session.number;
+                        session.video.muted = true;
+                        session.video.width  = 200;
+                        session.video.height = 100;
+                        session.video.className = "v2";
+                        video_out.appendChild(session.video);
+                    }else{
+                        self.theOther2 = session;
+                        self.videoOut2 = true;
+                        session.video.style.display = "none";
+                        session.video.id = session.number;
+                        session.video.muted = true;
+                        session.video.width  = 200;
+                        session.video.height = 100;
+                        session.video.className = "v2";
+                        video_out_2.appendChild(session.video);
+                        if(self.hoster){
+                            session.send({otherSession: self.theOther.number})
+                        }
+                    }
+                });
 
             });
             session.ended(function(session) {
@@ -119,18 +120,16 @@ app.controller("RtcController", function($scope,$log){
         return false;
     }
 
-    /*self.makeCall = function(){
-     self.loginSuccess = true;
-     self.videos = true;
-     self.videoOut = true;
-     self.join = false;
-     phone.dial(self.number)
+    self.makeCall = function(){
+         self.loginSuccess = true;
+         self.videos = true;
+         self.videoOut = true;
+         phone.dial(self.number)
      }
 
      self.joinRoom = function(){
-     self.join = true;
-     self.login();
-     }*/
+         self.login();
+     }
 
     self.pushToTalk = function(){
         self.talkMute = "Push To Mute";
@@ -159,30 +158,4 @@ app.controller("RtcController", function($scope,$log){
         window.phone.hangup();
     }
 
-
-    var room = window.room = PHONE({
-        number        : "mobile",
-        publish_key   : 'pub-c-2dd69866-318e-4ea4-84fa-b38d7fe74c8d',
-        subscribe_key : 'sub-c-ebfc8486-a8db-11e5-bd8c-0619f8945a4f',
-        datachannels  : true,
-        ssl: true,
-        media         : { audio : false, video : true },
-    });
-
-
-    room.receive(function(session){
-        session.connected(function(session) {
-            console.log(self.sessions.indexOf(session.number));
-            console.log(session.number)
-            self.sessions.push(session.number)
-            if(typeof window.phone !== 'undefined'){
-                if(session.number !== phone.number()){
-                    phone.dial(session.number)
-                }
-            }
-        });
-        session.ended(function(session) {
-
-        });
-    });
 });

@@ -246,9 +246,13 @@
             console.log(conversations);
         }
 
-        PHONE.channels = function(cb){
-            pubnub.where_now( { uuid : 'test'}, function(data) {
-                cb(data)
+        PHONE.addChannel = function(cb){
+            pubnub.channel_group_add_channel({
+              callback: function(a){
+                console.log(a)
+              },
+              channel_group: "mobile",
+              channel: config.number
             });
         }
 
