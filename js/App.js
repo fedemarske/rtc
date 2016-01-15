@@ -19,51 +19,41 @@ app.controller("RtcController", function($scope,$log){
 
     self.login = function(flag) {
         var user_name = self.username || "Anonymous";
-
         var phone = window.phone = PHONE({
             number        : user_name, // listen on username line else Anonymous
             publish_key   : 'pub-c-2dd69866-318e-4ea4-84fa-b38d7fe74c8d',
             subscribe_key : 'sub-c-ebfc8486-a8db-11e5-bd8c-0619f8945a4f',
             datachannels  : true,  // Enable Data Channels
-            ssl: true,
-            uuid: "test"
+            ssl: true
         });
+
 
         phone.ready(function(){
             $scope.$apply(function(){
-
-                phone.channels(function(chs){
-                    console.log(chs)
-                    if(chs.channels.length !== 0){
-                        for(var i = 0; i < chs.channels.length; i++){
-                            if(chs.channels[i] !== phone.number()){
-                                phone.dial(chs.channels[i]);
-                            }
-                        }
-                    }
-                });
-
                 self.userName = phone.number();
                 phone.video.style.display = "none";
                 phone.video.id = "video_in";
                 phone.video.muted = true;
                 phone.video.className = "v1";
                 video_in.appendChild(phone.video);
+                phone.dial("mobile");
                 self.loginSuccess = true;
                 self.videos = true;
                 self.hoster = true;
+                //var objSession = {number: phone.number()}
                 if(flag){
                     self.loginSuccess = true;
                     self.videos = true;
                     self.hoster = true;
+                    //objSession.hoster = true;
                     //self.hosterName = phone.number();
                 }
+                //self.sessions.push(objSession)
             })
         });
 
         phone.receive(function(session){
             session.connected(function(session) {
-                phone.convers();
                 if(session.number !== "mobile"){
                     self.talk = true;
                     $scope.$apply(function(){
@@ -97,7 +87,7 @@ app.controller("RtcController", function($scope,$log){
                         }
                     });
                 }
-                
+
             });
             session.ended(function(session) {
                 $scope.$apply(function(){
@@ -130,17 +120,17 @@ app.controller("RtcController", function($scope,$log){
     }
 
     /*self.makeCall = function(){
-        self.loginSuccess = true;
-        self.videos = true;
-        self.videoOut = true;
-        self.join = false;
-        phone.dial(self.number)
-    }
+     self.loginSuccess = true;
+     self.videos = true;
+     self.videoOut = true;
+     self.join = false;
+     phone.dial(self.number)
+     }
 
-    self.joinRoom = function(){
-        self.join = true;
-        self.login();
-    }*/
+     self.joinRoom = function(){
+     self.join = true;
+     self.login();
+     }*/
 
     self.pushToTalk = function(){
         self.talkMute = "Push To Mute";
@@ -169,4 +159,30 @@ app.controller("RtcController", function($scope,$log){
         window.phone.hangup();
     }
 
+
+    var room = window.room = PHONE({
+        number        : "mobile",
+        publish_key   : 'pub-c-2dd69866-318e-4ea4-84fa-b38d7fe74c8d',
+        subscribe_key : 'sub-c-ebfc8486-a8db-11e5-bd8c-0619f8945a4f',
+        datachannels  : true,
+        ssl: true,
+        media         : { audio : false, video : true },
+    });
+
+
+    room.receive(function(session){
+        session.connected(function(session) {
+            console.log(self.sessions.indexOf(session.number));
+            console.log(session.number)
+            self.sessions.push(session.number)
+            if(typeof window.phone !== 'undefined'){
+                if(session.number !== phone.number()){
+                    phone.dial(session.number)
+                }
+            }
+        });
+        session.ended(function(session) {
+
+        });
+    });
 });
