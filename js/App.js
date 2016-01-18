@@ -20,10 +20,12 @@ app.controller("RtcController", function($scope,$log){
 
     self.login = function(flag) {
         if(flag){
-            self.username = "mobile";
+            self.username = self.number;
+            self.hosterName = self.username;
         }
 
         var user_name = self.username || "Anonymous";
+
         var phone = window.phone = PHONE({
             number        : user_name, // listen on username line else Anonymous
             publish_key   : 'pub-c-2dd69866-318e-4ea4-84fa-b38d7fe74c8d',
